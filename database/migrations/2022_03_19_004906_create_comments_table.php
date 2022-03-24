@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('user');
             $table->string('comment');
-            $table->string('comment');
         });
     }
 
