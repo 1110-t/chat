@@ -2,8 +2,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ mix('js/app.js') }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reset.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css',true) }}">
 </head>
 
 <header class="header">
