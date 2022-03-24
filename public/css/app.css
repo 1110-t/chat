@@ -1,0 +1,111 @@
+@charset "UTF-8";
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  /* 16px*/
+  line-height: 2;
+}
+
+@media screen and (max-width: 640px) {
+  body {
+    /* 640px以下*/
+    font-size: 1.8rem;
+  }
+}
+
+.header {
+  height: 50px;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  height: calc(100% - 200px);
+}
+.main__comments {
+  padding: 15px;
+  width: 30%;
+  min-width: 350px;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+}
+.main__comments .comment {
+  margin-bottom: 10px;
+}
+.main__comments .comment__user {
+  text-align: right;
+  line-height: 1rem;
+  color: #000;
+  opacity: 0.8;
+}
+.main__comments .comment__text {
+  padding: 10px;
+  background-color: #EFEFEF;
+  border-radius: 5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.form__user {
+  border: 0;
+  text-align: right;
+}
+.form__user.error::-moz-placeholder {
+  color: red;
+}
+.form__user.error:-ms-input-placeholder {
+  color: red;
+}
+.form__user.error::placeholder {
+  color: red;
+}
+.form__comment {
+  border: 0;
+  background-color: EFEFEF;
+  border-radius: 5px;
+  padding: 10px;
+}
+.form__comment.error::-moz-placeholder {
+  color: red;
+}
+.form__comment.error:-ms-input-placeholder {
+  color: red;
+}
+.form__comment.error::placeholder {
+  color: red;
+}
+.form #submit {
+  border: none;
+  width: 100px;
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+.formWrapper {
+  width: 100%;
+  margin: auto;
+  position: fixed;
+  bottom: 0;
+  max-height: 200px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 30%;
+  min-width: 350px;
+  margin: auto;
+}
+.form__user {
+  height: 25px;
+}
+.form__comment {
+  height: 75px;
+}

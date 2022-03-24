@@ -1,0 +1,96 @@
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-size:1.6rem;/* 16px*/
+    line-height: 2;
+}
+
+body{
+    @media screen and (max-width:640px){/* 640px以下*/
+        font-size:1.8rem;
+    }
+}
+
+.header{
+    height:50px;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 200px);
+    &__comments{
+        padding: 15px;
+        width: 30%;
+        min-width: 350px;
+        margin-bottom:10px;
+        overflow-y:scroll;
+        & .comment{
+            margin-bottom:10px;
+            &__user{
+                text-align: right;
+                line-height:1.0rem;
+                color:#000;
+                opacity:0.8;
+            }
+            &__text{
+                padding: 10px;
+                background-color: #EFEFEF;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    &__user{
+        border: 0;
+        text-align: right;
+        &.error::placeholder{
+            color:red;
+        }
+    }
+    &__comment{
+        border: 0;
+        background-color: EFEFEF;
+        border-radius: 5px;
+        padding: 10px;
+        &.error::placeholder{
+            color:red;
+        }
+    }
+    & #submit{
+        border: none;
+        width: 100px;
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+}
+
+.formWrapper{
+    width: 100%;
+    margin: auto;
+    position: fixed;
+    bottom: 0;
+    max-height: 200px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 30%;
+    min-width: 350px;
+    margin: auto;
+    &__user{
+        height:25px;
+    }
+    &__comment{
+        height:75px;
+    }
+}
