@@ -28,6 +28,7 @@ body{
         margin-bottom:10px;
         overflow-y:scroll;
         & .comment{
+            transition:opacity 0.3s ease-out;
             margin-bottom:10px;
             &__user{
                 text-align: right;
@@ -93,4 +94,20 @@ body{
     &__comment{
         height:75px;
     }
+}
+
+.vibration {
+    animation: vibration .1s  infinite;
+}
+
+@keyframes vibration {
+    0% {transform: translate(0px, 0px) rotateZ(0deg)}
+    25% {transform: translate(2px, 2px) rotateZ(1deg)}
+    50% {transform: translate(0px, 2px) rotateZ(0deg)}
+    75% {transform: translate(2px, 0px) rotateZ(-1deg)}
+    100% {transform: translate(0px, 0px) rotateZ(0deg)}
+}
+
+.hidden{
+    opacity:0;
 }

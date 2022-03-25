@@ -2,8 +2,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ mix('js/app.js') }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/reset.css',true) }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css',true) }}">
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
 <header class="header">
@@ -41,7 +41,7 @@
     const button = document.getElementById("submit");
     const csrf = document.getElementsByTagName("meta")[0].getAttribute("content");
     button.addEventListener("click",function(e){
-        const url = "/chat";
+        const url = "/chat/aiueo";
         const user = document.getElementById("user").value;
         const comment = document.getElementById("comment").value;
         const data = {user: user, comment: comment};
@@ -56,13 +56,21 @@
         }).then((res) =>{
             return res.json();
         }).then((txt) => {
-            if(txt.errors['user']){
-                let user = document.querySelector(".form__user");
-                user.classList.add("error");
-            };
-            if(txt.errors['comment'][0]){
-                let comment = document.querySelector(".form__comment");
-                comment.classList.add("error");
+            if(txt.errors){
+                // 0.5秒間だけフォームを震わせる
+                let form = document.querySelector(".form");
+                form.classList.add("vibration");
+                setTimeout(function(){
+                    form.classList.remove("vibration");
+                },500);
+                if(txt.errors['user']){
+                    let user = document.querySelector(".form__user");
+                    user.classList.add("error");
+                };
+                if(txt.errors['comment'][0]){
+                    let comment = document.querySelector(".form__comment");
+                    comment.classList.add("error");
+                };
             };
         });
         return false;
@@ -75,6 +83,10 @@
         e_comment.classList.remove("error");
         let comments = document.querySelector(".main__comments");
         let comment = document.createElement("li");
+        comment.classList.add("hidden");
+        setTimeout(function(){
+            comment.classList.remove("hidden");
+        },50);
         comment.classList.add("main__comments__comment");
         comment.classList.add("comment");
         let user = document.createElement("p");
@@ -83,9 +95,15 @@
         let text = document.createElement("p");
         text.textContent = e.posts.comment;
         text.classList.add("comment__text");
+        // ユーザー名の入力欄を固定にする
+        document.querySelector(".form__user").setAttribute("readonly","")
+        // チャットを追加する
         comment.appendChild(user);
         comment.appendChild(text);
         comments.appendChild(comment);
+        // 今書いているチャットを削除する
+        e_comment.value = "";
+        // スクロールを一番下に持ってくる
         comments.scrollTo(0, comments.scrollHeight);
     });
 </script>
