@@ -31,6 +31,7 @@ body {
   min-width: 350px;
   margin-bottom: 10px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .main__comments .comment {
   transition: opacity 0.3s ease-out;
@@ -153,4 +154,14 @@ body {
 }
 .hidden {
   opacity: 0;
+}
+
+.list-item {
+  transition: all 0.8s ease;
+  margin-right: 10px;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
 }

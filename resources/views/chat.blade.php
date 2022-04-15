@@ -6,104 +6,89 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
+<body>
 <header class="header">
 </header>
 
 <main class="main">
-    <ul class="main__comments">
-        @foreach($comments as $comment)
-            <li class="main__comments__comment comment">
-                <p class="comment__user">{{$comment->user}}</p>
-                <p class="comment__text">{{$comment->comment}}</p>
-            </li>
-        @endforeach
+    <ul class="main__comments" id="app">
+        <test-vue :comments={{$comments}}></test-vue>
     </ul>
 </main>
-<div class="formWrapper">
-    <form action="/chat" class="form" method="POST">
-        @csrf
-        <input type="text" name="user"
-        @if($user != null)
-            readonly value = {{$user}}
-        @else
-            placeholder="ユーザー名を入力してください" 
-        @endif
-        class="form__user" id="user">
-        <input type="hidden" name="room" id="room" value="1">
-        <textarea name="comment" class="form__comment" cols="30" rows="3" placeholder="入力してください" id="comment"></textarea>
-        <button id="submit" type="button">投稿</button>
-    </form>
+
+<div class="formWrapper" id="app2">
+    <form-vue :csrf="{{json_encode(csrf_token())}}" :user="{{json_encode($user)}}"></form-vue>
 </div>
 
-<div id="board">
-</div>
+</body>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
-    const button = document.getElementById("submit");
-    const csrf = document.getElementsByTagName("meta")[0].getAttribute("content");
-    button.addEventListener("click",function(e){
-        const url = "/chat/aiueo";
-        const user = document.getElementById("user").value;
-        const comment = document.getElementById("comment").value;
-        const data = {user: user, comment: comment};
-        fetch(url,{
-            method:"POST",
-            cache:"no-cache",
-            headers: {
-                "X-CSRF-TOKEN": csrf,
-                "Content-Type":'application/json'
-            },
-            body:JSON.stringify(data)
-        }).then((res) =>{
-            return res.json();
-        }).then((txt) => {
-            if(txt.errors){
-                // 0.5秒間だけフォームを震わせる
-                let form = document.querySelector(".form");
-                form.classList.add("vibration");
-                setTimeout(function(){
-                    form.classList.remove("vibration");
-                },500);
-                if(txt.errors['user']){
-                    let user = document.querySelector(".form__user");
-                    user.classList.add("error");
-                };
-                if(txt.errors['comment'][0]){
-                    let comment = document.querySelector(".form__comment");
-                    comment.classList.add("error");
-                };
-            };
-        });
-        return false;
-    });
+    // const button = document.getElementById("submit");
+    // const csrf = document.getElementsByTagName("meta")[0].getAttribute("content");
+    // button.addEventListener("click",function(e){
+    //     const url = "/chat/aiueo";
+    //     const user = document.getElementById("user").value;
+    //     const comment = document.getElementById("comment").value;
+    //     const data = {user: user, comment: comment};
+    //     fetch(url,{
+    //         method:"POST",
+    //         cache:"no-cache",
+    //         headers: {
+    //             "X-CSRF-TOKEN": csrf,
+    //             "Content-Type":'application/json'
+    //         },
+    //         body:JSON.stringify(data)
+    //     }).then((res) =>{
+    //         return res.json();
+    //     }).then((txt) => {
+    //         if(txt.errors){
+    //             // 0.5秒間だけフォームを震わせる
+    //             let form = document.querySelector(".form");
+    //             form.classList.add("vibration");
+    //             setTimeout(function(){
+    //                 form.classList.remove("vibration");
+    //             },500);
+    //             if(txt.errors['user']){
+    //                 let user = document.querySelector(".form__user");
+    //                 user.classList.add("error");
+    //             };
+    //             if(txt.errors['comment'][0]){
+    //                 let comment = document.querySelector(".form__comment");
+    //                 comment.classList.add("error");
+    //             };
+    //         };
+    //     });
+    //     return false;
+    // });
 
-    window.Echo.channel("channelName").listen("PusherEvent", e => {
-        let e_user = document.querySelector(".form__user");
-        e_user.classList.remove("error");
-        let e_comment = document.querySelector(".form__comment");
-        e_comment.classList.remove("error");
-        let comments = document.querySelector(".main__comments");
-        let comment = document.createElement("li");
-        comment.classList.add("hidden");
-        setTimeout(function(){
-            comment.classList.remove("hidden");
-        },50);
-        comment.classList.add("main__comments__comment");
-        comment.classList.add("comment");
-        let user = document.createElement("p");
-        user.textContent = e.posts.user;
-        user.classList.add("comment__user");
-        let text = document.createElement("p");
-        text.textContent = e.posts.comment;
-        text.classList.add("comment__text");
-        // ユーザー名の入力欄を固定にする
-        document.querySelector(".form__user").setAttribute("readonly","")
-        // チャットを追加する
-        comment.appendChild(user);
-        comment.appendChild(text);
-        comments.appendChild(comment);
-        // 今書いているチャットを削除する
-        e_comment.value = "";
-        // スクロールを一番下に持ってくる
-        comments.scrollTo(0, comments.scrollHeight);
-    });
+    // window.Echo.channel("channelName").listen("PusherEvent", e => {
+    //     let e_user = document.querySelector(".form__user");
+    //     e_user.classList.remove("error");
+    //     let e_comment = document.querySelector(".form__comment");
+    //     e_comment.classList.remove("error");
+    //     let comments = document.querySelector(".main__comments");
+    //     let comment = document.createElement("li");
+    //     comment.classList.add("hidden");
+    //     setTimeout(function(){
+    //         comment.classList.remove("hidden");
+    //     },50);
+    //     comment.classList.add("main__comments__comment");
+    //     comment.classList.add("comment");
+    //     let user = document.createElement("p");
+    //     user.textContent = e.posts.user;
+    //     user.classList.add("comment__user");
+    //     let text = document.createElement("p");
+    //     text.textContent = e.posts.comment;
+    //     text.classList.add("comment__text");
+    //     // ユーザー名の入力欄を固定にする
+    //     document.querySelector(".form__user").setAttribute("readonly","")
+    //     // チャットを追加する
+    //     comment.appendChild(user);
+    //     comment.appendChild(text);
+    //     comments.appendChild(comment);
+    //     // 今書いているチャットを削除する
+    //     e_comment.value = "";
+    //     // スクロールを一番下に持ってくる
+    //     comments.scrollTo(0, comments.scrollHeight);
+    // });
 </script>
