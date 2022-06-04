@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PusherEvent implements ShouldBroadcast
+class RoomEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $posts;
@@ -20,10 +20,9 @@ class PusherEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($room,$posts)
+    public function __construct($posts)
     {
         $this->posts = $posts;
-        $this->room = $room;
     }
 
     /**
@@ -33,6 +32,6 @@ class PusherEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('1',$this->posts);
+        return new Channel('Room',$this->posts);
     }
 }

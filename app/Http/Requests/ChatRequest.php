@@ -36,7 +36,7 @@ class ChatRequest extends FormRequest
     {
         return [
             'user' => 'required:max:30',
-            'comment' => 'required:max:120'
+            'comment' => 'required:max:120',
         ];
     }
 }

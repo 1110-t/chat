@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Room extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
     /*
-    * チャットが属するルーム
+    * ルーム内のコメントを取得する
     */
-    public function room(){
-        return $this->belongsTo(Room::class);
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }

@@ -1,6 +1,4 @@
 <template>
-    <button @click="add">Add</button>
-    <button @click="remove">Remove</button>
     <transition-group name="list" @before-enter="beforeEnter" @after-enter="afterEnter" @enter="Enter">
         <li v-for="comment in comments_s" :key="comment" class="main__comments__comment comment">
             <p class="comment__user">{{comment.user}}</p>
@@ -13,6 +11,7 @@
 export default ({
     props: {
         comments: [],
+        room:{type: Number,required: true},
     },
     data(){
         return{
@@ -20,7 +19,7 @@ export default ({
         }
     },
     mounted(){
-        window.Echo.channel("channelName").listen("PusherEvent", e => {
+        window.Echo.channel(this.room).listen("PusherEvent", e => {
             this.comments_s.push(e.posts);
         })
     },

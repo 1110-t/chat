@@ -3,7 +3,7 @@
         <input type="hidden" name="_token" :value="csrf">
         <input type="text" name="user" class="form__user" id="user" :class="{error: error.user}" v-if="user!=null" readonly :value="user">
         <input type="text" name="user" class="form__user" id="user" :class="{error: error.user}" v-model="preUser" v-else placeholder="ユーザー名を入力してください">
-        <input type="hidden" name="room" id="room" value="1">
+        <input type="hidden" name="room" id="room" v-model="room">
         <textarea name="comment" v-model="comment" class="form__comment" :class="{error: error.comment}" cols="30" rows="3" placeholder="入力してください" id="comment"></textarea>
         <button id="submit" type="button" v-on:click="postComment">投稿</button>
     </form>
@@ -22,6 +22,7 @@ export default ({
     props: {
         url:{type: String,required: true,default:"/chat/aiueo"},
         csrf:{type: String,required: true},
+        room:{type: String,required: true},
         user:{type: String,required: true},
     },
     methods: {
@@ -34,7 +35,8 @@ export default ({
             };
             axios.post(this.url, {
                 "user":postUser,
-                "comment":this.comment
+                "comment":this.comment,
+                "room_id":this.room
             },{
                 headers:{
                     "X-CSRF-TOKEN":this.csrf,
